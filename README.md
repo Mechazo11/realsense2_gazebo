@@ -18,3 +18,8 @@
 ## Usage
 
 **TODO**
+
+
+## Useful notes
+
+* Comparison of various Intel realsense cameras: https://www.intelrealsense.com/compare-depth-cameras/

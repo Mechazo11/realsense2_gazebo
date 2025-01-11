@@ -6,7 +6,8 @@
   <description>Realsense2 simulated camera metapacakge</description>
   <license>Apache 2.0</license>
 
-  <author email="azmyin12@gmail.com">Luis Camero</author>
+  <author email="azmyin12@gmail.com">Azmyin Md. Kamal</author>
+  <maintainer email="azmyin12@gmail.com">Azmyin Md. Kamal</maintainer>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
