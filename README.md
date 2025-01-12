@@ -24,8 +24,16 @@
 
 ## Usage
 
-**TODO**
+* Test camera bringup in Rviz
 
+```bash
+source ./install/setup.bash
+ros2 launch realsense2_description test_d435.launch.py
+```
+
+### Acknowledgement
+
+* Mesh and initial URDF files are taken from Rangel Isaías Alvarado Walles's [realsense2_description](https://github.com/issaiass/realsense2_description). However to the best of my knowledge, Rangel's package is only compatible with Gazebo / Ignition Fortress or earlier Gazebo 11 both of which are near their `End-Of-Life`.
 
 ## Useful notes
 

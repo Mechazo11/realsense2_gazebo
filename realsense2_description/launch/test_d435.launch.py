@@ -36,7 +36,7 @@ ARGUMENTS = [
     DeclareLaunchArgument('use_sim_time', default_value='true',
                           choices=['true', 'false'],
                           description='use_sim_time'),
-    DeclareLaunchArgument(name='config', default_value='view_robot.rviz',
+    DeclareLaunchArgument(name='config', default_value='view_d435.rviz',
         description='Rviz configuration'
     ),
 ]
@@ -53,6 +53,15 @@ def launch_setup(context, *args, **kwargs):
     config_rviz = PathJoinSubstitution(
         [pkg_realsense2_description, 'rviz', LaunchConfiguration('config')]
     )
+
+    # Add these LogInfo actions to print the paths
+    log_pkg_path = LogInfo(msg=["Realsense package path: ", pkg_realsense2_description])
+    log_config_path = LogInfo(msg=["RViz config path: ", config_rviz])
+    log_urdf_path = LogInfo(msg=["URDF path: ", PathJoinSubstitution([
+        pkg_realsense2_description,
+        'urdf',
+        'visualize_d435.urdf.xacro'
+    ])])
     
     # Careful with the package, directory and urdf file names
     camera_description = ParameterValue(
@@ -67,10 +76,14 @@ def launch_setup(context, *args, **kwargs):
     value_type=str
     )
 
-    log_urdf_path = LogInfo(msg=["Resolved robot URDF path: ", camera_description])
+    # log_urdf_path = LogInfo(msg=["Resolved robot URDF path: ", camera_description])
 
     group_action_view_model_in_rviz = GroupAction([
-        # log_urdf_path, # Debug
+        # Add the LogInfo actions at the start of the group
+        log_pkg_path,
+        log_config_path,
+        log_urdf_path,
+
         PushRosNamespace(namepspace),
         
         # Spin up RViz
@@ -84,6 +97,21 @@ def launch_setup(context, *args, **kwargs):
                 ('/tf_static', 'tf_static')
              ],
              output='screen'),
+        
+        # Without this, it is not possible to generate the URDF of the camera
+        Node(
+            package='robot_state_publisher',
+            executable='robot_state_publisher',
+            parameters=[{
+                'robot_description': camera_description,
+                'use_sim_time': use_sim_time,
+            }],
+            # remappings=[
+            #     ('/tf', 'tf'),
+            #     ('/tf_static', 'tf_static'),
+            #     ('joint_states', 'robot/joint_states')]
+        ),
+        
         # Spin up Gazebo
     ])
 

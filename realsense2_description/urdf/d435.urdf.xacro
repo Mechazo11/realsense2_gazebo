@@ -13,9 +13,11 @@ Only usable for a simulated camera
 <robot name="sensor_d435" xmlns:xacro="http://ros.org/wiki/xacro">
   
   <!--File includes-->
-  <xacro:include filename="$(find realsense2_gz)/urdf/d435.gazebo.xacro"/>
+  <xacro:include filename="$(find realsense2_description)/urdf/d435.gazebo.xacro"/>
   
-  <xacro:macro name="sensor_d435" params="name topic_ns parent *origin
+  <xacro:macro name="sensor_d435" params="name 
+                                        topics_ns 
+                                        parent *origin
                                         update_rate:=30.0 
                                         image_height:=480 
                                         image_width:=640
