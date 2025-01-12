@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>realsense2_description</name>
+  <name>realsense2_gz</name>
   <version>1.0.0</version>
-  <description> URDF, mesh and rviz files for Intel Realsense2 camera for simulated robots.</description>
+  <description>Gazebo simulation assets for Intel Realsense2 camera.</description>
 
-  <license>Apache</license>
+  <license>Apache 2.0</license>
 
   <!-- Author -->
   <author email="azmyin12@gmail.com">Azmyin Md. Kamal</author>
@@ -13,10 +13,7 @@
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
-  <!-- Top-level mandatory dependencies -->
-  <depend>realsense2_gazebo</depend>
-  <depend>realsense2_description</depend>
-
+  <exec_depend>realsense2_description</exec_depend>
   <exec_depend>urdf</exec_depend>
   <exec_depend>xacro</exec_depend>
 

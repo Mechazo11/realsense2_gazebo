@@ -4,7 +4,7 @@ project(realsense2_gz)
 find_package(ament_cmake REQUIRED)
 find_package(realsense2_description)
 
-install(DIRECTORY launch rviz meshes urdf
+install(DIRECTORY launch urdf world
   DESTINATION share/${PROJECT_NAME}
 )
 
