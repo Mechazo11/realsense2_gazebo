@@ -11,6 +11,13 @@
 * realsense2_description: URDF, mesh and rviz files 
 * realsense2_gz: Launch files to bringup camera in gazebo
 
+## Features
+
+* RGB image -- Okay
+* Depth image -- **TODO**
+* Pointcloud -- **NOT SUPPORTED**
+
+
 ## Installation
 
 **TODO**
@@ -23,3 +30,5 @@
 ## Useful notes
 
 * Comparison of various Intel realsense cameras: https://www.intelrealsense.com/compare-depth-cameras/
+* Official example: https://github.com/gazebosim/docs/blob/master/harmonic/tutorials/sensors/sensor_tutorial.sdf
+* Official documentations of supported sensors: https://gazebosim.org/docs/latest/sensors/

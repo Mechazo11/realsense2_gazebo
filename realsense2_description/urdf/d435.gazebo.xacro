@@ -2,29 +2,28 @@
 
 <!--
 This is the Gazebo URDF model for the Intel RealSense D435 camera
+Newer Gazebo Harmonic / Ionic sensor documentations: https://gazebosim.org/docs/latest/sensors/
 -->
   
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
   
-  <xacro:macro name="gazebo_d435" params="camera_name reference_link topics_ns depth_optical_frame color_optical_frame infrared1_optical_frame infrared2_optical_frame publish_pointcloud:=true" >
+  <xacro:macro name="gazebo_d435" params="camera_name 
+                                          reference_link 
+                                          topics_ns 
+                                          depth_optical_frame 
+                                          color_optical_frame 
+                                          infrared1_optical_frame 
+                                          infrared2_optical_frame 
+                                          publish_pointcloud:=false" >
 
     <!-- Load parameters to model's main link-->
     <xacro:property name="deg_to_rad" value="0.01745329251994329577" />
+    
+    <!-- Define URDF -->
+    <!-- Based on rgbd plugin used in https://github.com/Mechazo11/ros2_asus_xtion -->
     <gazebo reference="${reference_link}">
-      <self_collide>0</self_collide>
-      <enable_wind>0</enable_wind>
-      <kinematic>0</kinematic>
-      <gravity>1</gravity>
-      <!--<mu>1</mu>-->
-      <mu2>1</mu2>
-      <fdir1>0 0 0</fdir1>
-      <!--<slip1>0</slip1>
-      <slip2>0</slip2>-->
-      <kp>1e+13</kp>
-      <kd>1</kd>
-      <!--<max_vel>0.01</max_vel>
-      <min_depth>0</min_depth>-->
-      <sensor name="${camera_name}color" type="camera">
+      
+      <sensor type="camera" name="${camera_name}color">
         <camera name="${camera_name}">
           <horizontal_fov>${69.4*deg_to_rad}</horizontal_fov>
           <image>

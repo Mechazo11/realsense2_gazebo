@@ -11,8 +11,10 @@ Only usable for a simulated camera
 -->
 
 <robot name="sensor_d435" xmlns:xacro="http://ros.org/wiki/xacro">
+  
   <!--File includes-->
-  <!-- <xacro:include filename="$(find realsense2_description)/urdf/_d435.gazebo.xacro"/> -->
+  <xacro:include filename="$(find realsense2_gz)/urdf/d435.gazebo.xacro"/>
+  
   <xacro:macro name="sensor_d435" params="name topic_ns parent *origin
                                         update_rate:=30.0 
                                         image_height:=480 
@@ -42,11 +44,12 @@ Only usable for a simulated camera
     <xacro:property name="d435_cam_depth_py" value="0.0175"/>
     <xacro:property name="d435_cam_depth_pz" value="${d435_cam_height/2}"/>
 
+    <!-- Define material properties for rviz and gazebo -->
     <material name="${name}_aluminum">
     <color rgba="0.5 0.5 0.5 1"/>
     </material>
 
-
+    <!-- Define joints and links -->
     <!-- camera body, with origin at bottom screw mount -->
     <joint name="${name}_joint" type="fixed">
       <xacro:insert_block name="origin" />
@@ -65,9 +68,7 @@ Only usable for a simulated camera
       <visual>
       <origin xyz="${d435_cam_mount_from_center_offset} ${-d435_cam_depth_py} 0" rpy="${M_PI/2} 0 ${M_PI/2}"/>
         <geometry>
-          <!-- <box size="${d435_cam_width} ${d435_cam_height} ${d435_cam_depth}"/> -->
           <mesh filename="package://realsense2_description/meshes/d435.dae" />
-          <!--<mesh filename="package://realsense2_description/meshes/d435/d435.dae" />-->
         </geometry>
         <material name="${name}_aluminum"/>
       </visual>
@@ -79,6 +80,7 @@ Only usable for a simulated camera
       </collision>
       <inertial>
         <!-- The following are not reliable values, and should not be used for modeling -->
+        <!-- NOTE for the purposes of simulation, these values is expected not to affect significantly -->
         <mass value="0.564" />
         <origin xyz="0 0 0" />
         <inertia ixx="0.003881243" ixy="0.0" ixz="0.0" iyy="0.000498940" iyz="0.0" izz="0.003879257" />
@@ -145,8 +147,14 @@ Only usable for a simulated camera
     </joint>
     <link name="${name}_color_optical_frame"/>
 
-    <!-- Realsense Gazebo Plugin -->
-    <xacro:gazebo_d435 camera_name="${name}" reference_link="${name}_link" topics_ns="${topics_ns}" depth_optical_frame="${name}_depth_optical_frame" color_optical_frame="${name}_color_optical_frame" infrared1_optical_frame="${name}_left_ir_optical_frame" infrared2_optical_frame="${name}_right_ir_optical_frame" publish_pointcloud="${publish_pointcloud}"/>
+    <!-- gazebo_d435 now use newer Gazebo Harmonic or later builtin plugins -->
+    <xacro:gazebo_d435 camera_name="${name}" reference_link="${name}_link" topics_ns="${topics_ns}" depth_optical_frame="${name}_depth_optical_frame" color_optical_frame="${name}_color_optical_frame" 
+    infrared1_optical_frame="${name}_left_ir_optical_frame" 
+    infrared2_optical_frame="${name}_right_ir_optical_frame" 
+    publish_pointcloud="${publish_pointcloud}"/>
+    
+    <!-- Import gazebo specific URDF file that uses builtin camera module -->
+
 
   </xacro:macro>
 </robot>
