@@ -3,6 +3,7 @@
 <!--
 This is the Gazebo URDF model for the Intel RealSense D435 camera
 Newer Gazebo Harmonic / Ionic sensor documentations: https://gazebosim.org/docs/latest/sensors/
+TODO: Pointcloud is not supported
 -->
   
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
@@ -10,10 +11,9 @@ Newer Gazebo Harmonic / Ionic sensor documentations: https://gazebosim.org/docs/
   <xacro:macro name="gazebo_d435" params="camera_name 
                                           reference_link 
                                           topics_ns 
-                                          depth_optical_frame 
-                                          color_optical_frame 
-                                          infrared1_optical_frame 
-                                          infrared2_optical_frame 
+                                          update_rate:=30.0 
+                                          image_height:=480 
+                                          image_width:=640 
                                           publish_pointcloud:=false" >
 
     <!-- Load parameters to model's main link-->
@@ -21,16 +21,17 @@ Newer Gazebo Harmonic / Ionic sensor documentations: https://gazebosim.org/docs/
     
     <!-- Define URDF -->
     <!-- Based on rgbd plugin used in https://github.com/Mechazo11/ros2_asus_xtion -->
+    <!-- Based on https://github.com/MOGI-ROS/Week-5-6-Gazebo-sensors/blob/main/bme_gazebo_sensors/urdf/mogi_bot.gazebo -->
     <gazebo reference="${reference_link}">
-      
+      <!-- RGB color sensor -->
       <sensor type="camera" name="${camera_name}color">
         <camera name="${camera_name}">
           <horizontal_fov>${69.4*deg_to_rad}</horizontal_fov>
           <image>
-            <width>640</width>
-            <height>480</height>
-            <format>RGB_INT8</format>
-          </image>
+              <format>R8G8B8</format>
+              <width>${image_width}</width>
+              <height>${image_height}</height>
+            </image>
           <clip>
             <near>0.1</near>
             <far>100</far>
@@ -40,12 +41,16 @@ Newer Gazebo Harmonic / Ionic sensor documentations: https://gazebosim.org/docs/
             <mean>0.0</mean>
             <stddev>0.007</stddev>
           </noise>
+          <gz_frame_id>${name}_color_frame</gz_frame_id>
+          <optical_frame_id>${name}_color_optical_frame</optical_frame_id>
         </camera>
         <always_on>1</always_on>
-        <update_rate>30</update_rate>
-        <visualize>1</visualize>
+        <update_rate>${update_rate}</update_rate>
+        <visualize>true</visualize>
+        <topic>${name}/color_raw/</topic>
       </sensor>
-      <sensor name="${camera_name}ired1" type="camera">
+      
+      <!-- <sensor name="${camera_name}ired1" type="camera">
         <camera name="${camera_name}">
           <horizontal_fov>${85.2*deg_to_rad}</horizontal_fov>
           <image>
@@ -66,8 +71,9 @@ Newer Gazebo Harmonic / Ionic sensor documentations: https://gazebosim.org/docs/
         <always_on>1</always_on>
         <update_rate>90</update_rate>
         <visualize>0</visualize>
-      </sensor>
-      <sensor name="${camera_name}ired2" type="camera">
+      </sensor> -->
+
+      <!-- <sensor name="${camera_name}ired2" type="camera">
         <camera name="${camera_name}">
           <horizontal_fov>${85.2*deg_to_rad}</horizontal_fov>
           <image>
@@ -88,13 +94,14 @@ Newer Gazebo Harmonic / Ionic sensor documentations: https://gazebosim.org/docs/
         <always_on>1</always_on>
         <update_rate>90</update_rate>
         <visualize>0</visualize>
-      </sensor>
-      <sensor name="${camera_name}depth" type="depth">
+      </sensor> -->
+
+      <!-- <sensor name="${camera_name}depth" type="depth">
         <camera name="${camera_name}">
           <horizontal_fov>${85.2*deg_to_rad}</horizontal_fov>
           <image>
-            <width>1280</width>
-            <height>720</height>
+            <width>${image_width}</width>
+            <height>${image_height}</height>
           </image>
           <clip>
             <near>0.1</near>
@@ -109,10 +116,12 @@ Newer Gazebo Harmonic / Ionic sensor documentations: https://gazebosim.org/docs/
         <always_on>1</always_on>
         <update_rate>90</update_rate>
         <visualize>0</visualize>
-      </sensor>
+      </sensor> -->
+    
     </gazebo>
 
-    <gazebo>
+    <!-- TODO depricated -->
+    <!-- <gazebo>
       <plugin name="${topics_ns}" filename="librealsense_gazebo_plugin.so">
         <prefix>${camera_name}</prefix>
         <depthUpdateRate>30.0</depthUpdateRate>
@@ -137,7 +146,7 @@ Newer Gazebo Harmonic / Ionic sensor documentations: https://gazebosim.org/docs/
         <pointCloudCutoff>0.25</pointCloudCutoff>
         <pointCloudCutoffMax>9.0</pointCloudCutoffMax>
       </plugin>
-    </gazebo>
+    </gazebo> -->
 
   </xacro:macro>
 </robot>

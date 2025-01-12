@@ -13,7 +13,7 @@
 
 ## Features
 
-* RGB image -- Okay
+* RGB image -- **TODO**. Defaults to 640 x 480 with 
 * Depth image -- **TODO**
 * Pointcloud -- **NOT SUPPORTED**
 
@@ -32,3 +32,4 @@
 * Comparison of various Intel realsense cameras: https://www.intelrealsense.com/compare-depth-cameras/
 * Official example: https://github.com/gazebosim/docs/blob/master/harmonic/tutorials/sensors/sensor_tutorial.sdf
 * Official documentations of supported sensors: https://gazebosim.org/docs/latest/sensors/
+* An excellent example of using RGBD, depth and lidar camera is here: https://github.com/MOGI-ROS/Week-5-6-Gazebo-sensors/blob/main/bme_gazebo_sensors/urdf/mogi_bot.gazebo

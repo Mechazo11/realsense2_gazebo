@@ -148,13 +148,12 @@ Only usable for a simulated camera
     <link name="${name}_color_optical_frame"/>
 
     <!-- gazebo_d435 now use newer Gazebo Harmonic or later builtin plugins -->
-    <xacro:gazebo_d435 camera_name="${name}" reference_link="${name}_link" topics_ns="${topics_ns}" depth_optical_frame="${name}_depth_optical_frame" color_optical_frame="${name}_color_optical_frame" 
-    infrared1_optical_frame="${name}_left_ir_optical_frame" 
-    infrared2_optical_frame="${name}_right_ir_optical_frame" 
-    publish_pointcloud="${publish_pointcloud}"/>
-    
-    <!-- Import gazebo specific URDF file that uses builtin camera module -->
-
+    <xacro:gazebo_d435 camera_name="${name}" 
+    reference_link="${name}_link" 
+    topics_ns="${topics_ns}" 
+    image_height="480" 
+    image_width="640" 
+    publish_pointcloud="false"/>
 
   </xacro:macro>
 </robot>
