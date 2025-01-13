@@ -1,0 +1,123 @@
+<?xml version="1.0"?>
+
+<!--
+This is the Gazebo URDF model for the Intel RealSense D435 camera
+Newer Gazebo Harmonic / Ionic sensor documentations: https://gazebosim.org/docs/latest/sensors/
+TODO: Pointcloud is not supported
+-->
+  
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+  
+  <xacro:macro name="gazebo_d435" params="camera_name 
+                                          reference_link 
+                                          update_rate:=30.0 
+                                          image_height:=480 
+                                          image_width:=640 
+                                          publish_pointcloud:=false" >
+
+    <!-- Load parameters to model's main link-->
+    <xacro:property name="deg_to_rad" value="0.01745329251994329577" />
+    
+    <!-- Define URDF -->
+    <!-- Based on rgbd plugin used in https://github.com/Mechazo11/ros2_asus_xtion -->
+    <!-- Based on https://github.com/MOGI-ROS/Week-5-6-Gazebo-sensors/blob/main/bme_gazebo_sensors/urdf/mogi_bot.gazebo -->
+    <gazebo reference="${reference_link}">
+      <!-- RGB color sensor -->
+      <sensor type="camera" name="${camera_name}color">
+        <camera name="${camera_name}">
+          <horizontal_fov>${69.4*deg_to_rad}</horizontal_fov>
+          <image>
+              <format>R8G8B8</format>
+              <width>${image_width}</width>
+              <height>${image_height}</height>
+            </image>
+          <clip>
+            <near>0.1</near>
+            <far>100</far>
+          </clip>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.007</stddev>
+          </noise>
+          <gz_frame_id>${camera_name}_color_frame</gz_frame_id>
+          <optical_frame_id>${camera_name}_color_optical_frame</optical_frame_id>
+        </camera>
+        <always_on>1</always_on>
+        <update_rate>${update_rate}</update_rate>
+        <visualize>true</visualize>
+        <topic>${camera_name}/color_raw/</topic>
+      </sensor>
+      
+      <!-- <sensor name="${camera_name}ired1" type="camera">
+        <camera name="${camera_name}">
+          <horizontal_fov>${85.2*deg_to_rad}</horizontal_fov>
+          <image>
+            <width>1280</width>
+            <height>720</height>
+            <format>L_INT8</format>
+          </image>
+          <clip>
+            <near>0.1</near>
+            <far>100</far>
+          </clip>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.05</stddev>
+          </noise>
+        </camera>
+        <always_on>1</always_on>
+        <update_rate>90</update_rate>
+        <visualize>0</visualize>
+      </sensor> -->
+
+      <!-- <sensor name="${camera_name}ired2" type="camera">
+        <camera name="${camera_name}">
+          <horizontal_fov>${85.2*deg_to_rad}</horizontal_fov>
+          <image>
+            <width>1280</width>
+            <height>720</height>
+            <format>L_INT8</format>
+          </image>
+          <clip>
+            <near>0.1</near>
+            <far>100</far>
+          </clip>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.05</stddev>
+          </noise>
+        </camera>
+        <always_on>1</always_on>
+        <update_rate>90</update_rate>
+        <visualize>0</visualize>
+      </sensor> -->
+
+      <!-- <sensor name="${camera_name}depth" type="depth">
+        <camera name="${camera_name}">
+          <horizontal_fov>${85.2*deg_to_rad}</horizontal_fov>
+          <image>
+            <width>${image_width}</width>
+            <height>${image_height}</height>
+          </image>
+          <clip>
+            <near>0.1</near>
+            <far>100</far>
+          </clip>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.100</stddev>
+          </noise>
+        </camera>
+        <always_on>1</always_on>
+        <update_rate>90</update_rate>
+        <visualize>0</visualize>
+      </sensor> -->
+    
+    </gazebo>
+    
+  </xacro:macro>
+</robot>

@@ -23,7 +23,7 @@ TODO: Pointcloud is not supported
     <!-- Based on https://github.com/MOGI-ROS/Week-5-6-Gazebo-sensors/blob/main/bme_gazebo_sensors/urdf/mogi_bot.gazebo -->
     <gazebo reference="${reference_link}">
       <!-- RGB color sensor -->
-      <sensor type="camera" name="${camera_name}color">
+      <sensor type="rgbd_camera" name="${camera_name}">
         <camera name="${camera_name}">
           <horizontal_fov>${69.4*deg_to_rad}</horizontal_fov>
           <image>
@@ -35,89 +35,27 @@ TODO: Pointcloud is not supported
             <near>0.1</near>
             <far>100</far>
           </clip>
+          <gz_frame_id>${camera_name}_color_frame</gz_frame_id>
+          <optical_frame_id>${camera_name}_color_optical_frame</optical_frame_id>
           <noise>
             <type>gaussian</type>
             <mean>0.0</mean>
             <stddev>0.007</stddev>
           </noise>
-          <gz_frame_id>${camera_name}_color_frame</gz_frame_id>
-          <optical_frame_id>${camera_name}_color_optical_frame</optical_frame_id>
+          <distortion>
+            <k1>0.00000001</k1>
+            <k2>0.00000001</k2>
+            <k3>0.00000001</k3>
+            <p1>0.00000001</p1>
+            <p2>0.00000001</p2>
+          </distortion>
         </camera>
         <always_on>1</always_on>
         <update_rate>${update_rate}</update_rate>
         <visualize>true</visualize>
-        <topic>${camera_name}/color_raw/</topic>
+        <!-- <topic>${camera_name}/color_raw/</topic> -->
+        <topic>$(arg namespace)/sensors/${name}</topic>
       </sensor>
-      
-      <!-- <sensor name="${camera_name}ired1" type="camera">
-        <camera name="${camera_name}">
-          <horizontal_fov>${85.2*deg_to_rad}</horizontal_fov>
-          <image>
-            <width>1280</width>
-            <height>720</height>
-            <format>L_INT8</format>
-          </image>
-          <clip>
-            <near>0.1</near>
-            <far>100</far>
-          </clip>
-          <noise>
-            <type>gaussian</type>
-            <mean>0.0</mean>
-            <stddev>0.05</stddev>
-          </noise>
-        </camera>
-        <always_on>1</always_on>
-        <update_rate>90</update_rate>
-        <visualize>0</visualize>
-      </sensor> -->
-
-      <!-- <sensor name="${camera_name}ired2" type="camera">
-        <camera name="${camera_name}">
-          <horizontal_fov>${85.2*deg_to_rad}</horizontal_fov>
-          <image>
-            <width>1280</width>
-            <height>720</height>
-            <format>L_INT8</format>
-          </image>
-          <clip>
-            <near>0.1</near>
-            <far>100</far>
-          </clip>
-          <noise>
-            <type>gaussian</type>
-            <mean>0.0</mean>
-            <stddev>0.05</stddev>
-          </noise>
-        </camera>
-        <always_on>1</always_on>
-        <update_rate>90</update_rate>
-        <visualize>0</visualize>
-      </sensor> -->
-
-      <!-- <sensor name="${camera_name}depth" type="depth">
-        <camera name="${camera_name}">
-          <horizontal_fov>${85.2*deg_to_rad}</horizontal_fov>
-          <image>
-            <width>${image_width}</width>
-            <height>${image_height}</height>
-          </image>
-          <clip>
-            <near>0.1</near>
-            <far>100</far>
-          </clip>
-          <noise>
-            <type>gaussian</type>
-            <mean>0.0</mean>
-            <stddev>0.100</stddev>
-          </noise>
-        </camera>
-        <always_on>1</always_on>
-        <update_rate>90</update_rate>
-        <visualize>0</visualize>
-      </sensor> -->
-    
     </gazebo>
-    
   </xacro:macro>
 </robot>
