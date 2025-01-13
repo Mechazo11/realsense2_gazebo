@@ -15,13 +15,11 @@ Only usable for a simulated camera
   <!--File includes-->
   <xacro:include filename="$(find realsense2_description)/urdf/d435.gazebo.xacro"/>
   
-  <xacro:macro name="sensor_d435" params="name 
-                                        topics_ns 
-                                        parent *origin
-                                        update_rate:=30.0 
-                                        image_height:=480 
-                                        image_width:=640
-                                        publish_pointcloud:=false"> 
+  <xacro:macro name="sensor_d435" params="name parent_link *origin
+                                          update_rate:=30.0 
+                                          image_height:=480 
+                                          image_width:=640
+                                          publish_pointcloud:=false"> 
 
     <!-- Define properties -->
     <xacro:property name="M_PI" value="3.1415926535897931" />
@@ -55,7 +53,7 @@ Only usable for a simulated camera
     <!-- camera body, with origin at bottom screw mount -->
     <joint name="${name}_joint" type="fixed">
       <xacro:insert_block name="origin" />
-      <parent link="${parent}"/>
+      <parent link="${parent_link}"/>
       <child link="${name}_bottom_screw_frame" />
     </joint>
     <link name="${name}_bottom_screw_frame"/>
@@ -152,7 +150,6 @@ Only usable for a simulated camera
     <!-- gazebo_d435 now use newer Gazebo Harmonic or later builtin plugins -->
     <xacro:gazebo_d435 camera_name="${name}" 
     reference_link="${name}_link" 
-    topics_ns="${topics_ns}" 
     image_height="480" 
     image_width="640" 
     publish_pointcloud="false"/>

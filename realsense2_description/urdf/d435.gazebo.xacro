@@ -10,7 +10,6 @@ TODO: Pointcloud is not supported
   
   <xacro:macro name="gazebo_d435" params="camera_name 
                                           reference_link 
-                                          topics_ns 
                                           update_rate:=30.0 
                                           image_height:=480 
                                           image_width:=640 
